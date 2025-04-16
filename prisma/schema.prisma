@@ -33,7 +33,13 @@ model Bike {
   model      String
   year       Int
   customerId String
-  customer   Customer @relation(fields: [customerId], references: [customerId])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  customer      Customer        @relation(fields: [customerId], references: [customerId])
+  ServiceRecord ServiceRecord[]
+
+  @@map("bikes")
 }
 
 model ServiceRecord {
@@ -42,4 +48,18 @@ model ServiceRecord {
   serviceDate    DateTime
   completionDate DateTime
   description    String
+  status         Status
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bike Bike @relation(fields: [bikeId], references: [bikeId])
+
+  @@map("serviceRecords")
+}
+
+enum Status {
+  pending     @map("pending")
+  in_progress @map("in-progress")
+  done        @map("done")
 }
