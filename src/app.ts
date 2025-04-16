@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import status from "http-status";
 import router from "./routers";
+import globalErrorHandler from "./middleware/globalErrorHandler";
 
 const app: Application = express();
 app.use(cors());
@@ -16,7 +17,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/", router);
-// app.use(globalErrorHandler);
+app.use(globalErrorHandler);
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(status.NOT_FOUND).json({
     success: false,

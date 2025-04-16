@@ -1,8 +1,14 @@
 import express, { NextFunction, Request, Response } from "express";
+import { customerController } from "./customers.controller";
+import validateRequest from "../../middleware/validatedRequest";
+import { customerValidation } from "./customers.validation";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("Hello World");
-});
+router.get("/", customerController.getAllCustomerFromDb);
+router.post(
+  "/",
+  validateRequest(customerValidation.createCustomerSchema),
+  customerController.createCustomerOnDB
+);
 export const customerRoutes = router;

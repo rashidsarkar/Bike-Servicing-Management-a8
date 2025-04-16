@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import status from "http-status";
+import { ZodError } from "zod";
+import { Prisma } from "../generated/prisma"; // or from "@prisma/client"
 
 const globalErrorHandler = (
   err: any,
@@ -7,10 +9,53 @@ const globalErrorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  res.status(status.INTERNAL_SERVER_ERROR).json({
+  let statusCode: number = status.INTERNAL_SERVER_ERROR;
+  let message = "Internal Server Error";
+  let errorDetails: any = null;
+  const stack = process.env.NODE_ENV === "development" ? err.stack : undefined;
+
+  // ✅ Prisma Error
+  if (err instanceof Prisma.PrismaClientKnownRequestError) {
+    switch (err.code) {
+      case "P2002":
+        statusCode = status.CONFLICT;
+        message = "Duplicate field value error";
+        break;
+      case "P2025":
+        statusCode = status.NOT_FOUND;
+        message = "Resource not found";
+        break;
+      default:
+        statusCode = status.BAD_REQUEST;
+        message = `Prisma error: ${err.code}`;
+    }
+  }
+
+  // ✅ Zod Validation Error
+  else if (err instanceof ZodError) {
+    statusCode = status.BAD_REQUEST;
+    message = "Validation error";
+    errorDetails = err.errors.map((issue) => ({
+      path: issue.path.join("."),
+      message: issue.message,
+    }));
+  }
+
+  // ✅ Custom Error (with statusCode and message)
+  else if (err.statusCode && err.message) {
+    statusCode = err.statusCode;
+    message = err.message;
+    errorDetails = err.error || null;
+  }
+
+  // ✅ Final Response
+  res.status(statusCode).json({
     success: false,
-    message: err.message || "Internal Server Error",
-    error: err,
+    status: statusCode,
+    message,
+    ...(errorDetails && { error: errorDetails }),
+    stack,
   });
 };
+
 export default globalErrorHandler;
