@@ -1,7 +1,7 @@
+import { Prisma } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import status from "http-status";
 import { ZodError } from "zod";
-import { Prisma } from "../generated/prisma"; // or from "@prisma/client"
 
 const globalErrorHandler = (
   err: any,

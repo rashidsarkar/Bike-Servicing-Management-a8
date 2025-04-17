@@ -6,6 +6,13 @@ import { customerValidation } from "./customers.validation";
 const router = express.Router();
 
 router.get("/", customerController.getAllCustomerFromDb);
+router.get("/:idx", customerController.getSingleCustomerFromDb);
+router.put(
+  "/:idx",
+  validateRequest(customerValidation.updateCustomerSchema),
+  customerController.updateCustomerFromDb
+);
+router.delete("/:idx", customerController.deleteCustomerFromDb);
 router.post(
   "/",
   validateRequest(customerValidation.createCustomerSchema),

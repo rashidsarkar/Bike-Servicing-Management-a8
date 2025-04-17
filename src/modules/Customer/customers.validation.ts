@@ -15,6 +15,15 @@ const createCustomerSchema = z.object({
     }),
   }),
 });
+const updateCustomerSchema = z.object({
+  body: z.object({
+    name: z.string().optional(),
+    email: z.string().email("Invalid email address").optional(),
+    phone: z.string().optional(),
+  }),
+});
+
 export const customerValidation = {
   createCustomerSchema,
+  updateCustomerSchema,
 };

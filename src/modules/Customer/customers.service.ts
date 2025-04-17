@@ -13,6 +13,34 @@ const getAllCustomer = async () => {
   });
   return res;
 };
+const getSingleCustomer = async (customId: string) => {
+  const res = await prisma.customer.findUniqueOrThrow({
+    where: {
+      customerId: customId,
+    },
+    select: {
+      customerId: true,
+      name: true,
+      email: true,
+      phone: true,
+      createdAt: true,
+    },
+  });
+  return res;
+};
+
+const updateCustomer = async (customId: string, payload: Partial<Customer>) => {
+  const res = await prisma.customer.update({
+    where: { customerId: customId },
+    data: payload,
+  });
+  return res;
+};
+const deleteCustomer = async (customId: string) => {
+  const res = await prisma.customer.delete({ where: { customerId: customId } });
+  return res;
+};
+
 const createCustomer = async (customerData: Customer) => {
   const result = await prisma.customer.create({
     data: customerData,
@@ -22,4 +50,7 @@ const createCustomer = async (customerData: Customer) => {
 export const customerService = {
   getAllCustomer,
   createCustomer,
+  getSingleCustomer,
+  updateCustomer,
+  deleteCustomer,
 };

@@ -12,6 +12,39 @@ const getAllCustomerFromDb = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const getSingleCustomerFromDb = catchAsync(async (req, res) => {
+  const { idx } = req.params;
+  const result = await customerService.getSingleCustomer(idx);
+  sendResponse(res, {
+    statusCode: status.OK,
+    success: true,
+    message: "Customers fetched successfully",
+    data: result,
+  });
+});
+const updateCustomerFromDb = catchAsync(async (req, res) => {
+  const { idx } = req.params;
+
+  const result = await customerService.updateCustomer(idx, req.body);
+  sendResponse(res, {
+    statusCode: status.OK,
+    success: true,
+    message: "Customer updated successfully",
+    data: result,
+  });
+});
+const deleteCustomerFromDb = catchAsync(async (req, res) => {
+  const { idx } = req.params;
+
+  const result = await customerService.deleteCustomer(idx);
+  sendResponse(res, {
+    statusCode: status.OK,
+    success: true,
+    message: "Customer deleted successfully",
+    data: null,
+  });
+});
+
 const createCustomerOnDB = catchAsync(async (req, res) => {
   const result = await customerService.createCustomer(req.body);
   const { updatedAt, ...allDataWithoutUpdatedAt } = result;
@@ -26,4 +59,7 @@ const createCustomerOnDB = catchAsync(async (req, res) => {
 export const customerController = {
   getAllCustomerFromDb,
   createCustomerOnDB,
+  getSingleCustomerFromDb,
+  updateCustomerFromDb,
+  deleteCustomerFromDb,
 };
