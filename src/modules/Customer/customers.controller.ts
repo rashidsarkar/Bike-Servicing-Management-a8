@@ -8,21 +8,22 @@ const getAllCustomerFromDb = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: status.OK,
     success: true,
-    message: "Customer data fetched successfully",
+    message: "Customers fetched successfully",
     data: result,
   });
 });
 const createCustomerOnDB = catchAsync(async (req, res) => {
   const result = await customerService.createCustomer(req.body);
+  const { updatedAt, ...allDataWithoutUpdatedAt } = result;
   sendResponse(res, {
     statusCode: status.OK,
     success: true,
     message: "Customer created successfully",
-    data: result,
+    data: allDataWithoutUpdatedAt,
   });
 });
 
 export const customerController = {
   getAllCustomerFromDb,
-  createCustomerOnDB
+  createCustomerOnDB,
 };
