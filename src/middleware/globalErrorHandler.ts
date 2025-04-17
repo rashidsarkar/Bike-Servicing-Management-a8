@@ -25,6 +25,10 @@ const globalErrorHandler = (
         statusCode = status.NOT_FOUND;
         message = "Resource not found";
         break;
+      case "P2003":
+        statusCode = status.BAD_REQUEST;
+        message = "Foreign key constraint failed: related record not found";
+        break;
       default:
         statusCode = status.BAD_REQUEST;
         message = `Prisma error: ${err.code}`;
