@@ -49,7 +49,7 @@ const createCustomerOnDB = catchAsync(async (req, res) => {
   const result = await customerService.createCustomer(req.body);
   const { updatedAt, ...allDataWithoutUpdatedAt } = result;
   sendResponse(res, {
-    statusCode: status.OK,
+    statusCode: status.CREATED,
     success: true,
     message: "Customer created successfully",
     data: allDataWithoutUpdatedAt,

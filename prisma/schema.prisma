@@ -43,10 +43,10 @@ model Bike {
 }
 
 model ServiceRecord {
-  serviceId      String   @id @default(uuid())
+  serviceId      String    @id @default(uuid())
   bikeId         String
   serviceDate    DateTime
-  completionDate DateTime
+  completionDate DateTime?
   description    String
   status         Status
 
