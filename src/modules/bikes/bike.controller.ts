@@ -23,8 +23,20 @@ const getAllBikeFromDB = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const getSingleBikeFromDB = catchAsync(async (req, res) => {
+  const id = req.params.idx;
+  const result = await bikeService.getSingleBike(id);
+
+  sendResponse(res, {
+    statusCode: status.OK,
+    success: true,
+    message: "Bikes fetched successfully",
+    data: result,
+  });
+});
 
 export const bikeController = {
   createBikeOnDB,
   getAllBikeFromDB,
+  getSingleBikeFromDB,
 };

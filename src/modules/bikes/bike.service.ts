@@ -19,7 +19,23 @@ const createBikes = async (bikeData: Bike) => {
   });
   return result;
 };
+const getSingleBike = async (bikeIdx: string) => {
+  const result = await prisma.bike.findUniqueOrThrow({
+    where: {
+      bikeId: bikeIdx,
+    },
+    select: {
+      bikeId: true,
+      brand: true,
+      model: true,
+      year: true,
+      customerId: true,
+    },
+  });
+  return result;
+};
 export const bikeService = {
   createBikes,
   getAllBikes,
+  getSingleBike,
 };

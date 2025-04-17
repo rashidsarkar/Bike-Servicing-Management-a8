@@ -5,6 +5,7 @@ import { bikeValidation } from "./bike.validation";
 
 const router = express.Router();
 router.get("/", bikeController.getAllBikeFromDB);
+router.get("/:idx", bikeController.getSingleBikeFromDB);
 router.post(
   "/",
   validateRequest(bikeValidation.createBikeSchema),
