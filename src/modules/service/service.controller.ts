@@ -47,10 +47,21 @@ const updateServiceStatusFromDB = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const serviceStatusData = catchAsync(async (req, res) => {
+  // console.log("hello");
+  const result = await serviceRecordService.serviceStatusData();
+  sendResponse(res, {
+    statusCode: status.OK,
+    success: true,
+    message: "Overdue or pending services fetched successfully",
+    data: result,
+  });
+});
 
 export const serviceController = {
   createServiceOnDB,
   getAllServiceFromDB,
   getSingleServiceFromDB,
   updateServiceStatusFromDB,
+  serviceStatusData,
 };

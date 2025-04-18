@@ -9,6 +9,7 @@ const globalErrorHandler = (
   res: Response,
   next: NextFunction
 ) => {
+  // console.log(err);
   let statusCode: number = status.INTERNAL_SERVER_ERROR;
   let message = "Internal Server Error";
   let errorDetails: any = null;
@@ -18,6 +19,7 @@ const globalErrorHandler = (
   if (err instanceof Prisma.PrismaClientKnownRequestError) {
     switch (err.code) {
       case "P2002":
+        console.log(err);
         statusCode = status.CONFLICT;
         message = "Duplicate field value error";
         break;
