@@ -45,6 +45,13 @@ const updateCustomer = (customId, payload) => __awaiter(void 0, void 0, void 0, 
     const res = yield prisma_1.default.customer.update({
         where: { customerId: customId },
         data: payload,
+        select: {
+            customerId: true,
+            name: true,
+            email: true,
+            phone: true,
+            createdAt: true,
+        },
     });
     return res;
 });
