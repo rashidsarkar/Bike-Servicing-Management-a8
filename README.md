@@ -1,159 +1,118 @@
-# 🚴‍♂️ Bike Servicing Management Backend
+# Bike Servicing Management System
 
-This is a RESTful backend application designed to manage bike servicing operations efficiently. It supports customer and bike management, service records (including service status tracking), and basic authentication setup. Built with **Node.js**, **Express**, **Prisma**, and **TypeScript**, it ensures type safety, structured database access, and clean project architecture.
+A complete backend solution for managing bike servicing records, customers, and service statuses. This system helps you maintain a seamless workflow for registering bikes, tracking service records, updating statuses, and managing customer information.
 
----
-
-## 📁 Project Structure
-
-```
-src/
-│
-├── modules/
-│   ├── bikes/
-│   ├── customers/
-│   ├── services/
-│
-├── middleware/
-├── shared/
-├── utils/
-├── server.ts
-```
+🔗 **Live Backend**: [https://bike-servicing-management-a8-fwq1.vercel.app/](https://bike-servicing-management-a8-fwq1.vercel.app/)
 
 ---
 
-## ⚙️ Technologies Used
+## 🚀 Tech Stack
 
-### Backend & Server
-
-- **Node.js** – JavaScript runtime
+- **Node.js** – Runtime environment
 - **Express.js** – Web framework
-- **TypeScript** – Type-safe JavaScript
-- **Prisma ORM** – Database toolkit for PostgreSQL (or others)
-- **Zod** – Schema validation
-- **HTTP-Status** – Semantic HTTP status codes
-
-### Authentication & Security
-
-- **bcrypt** – Password hashing
-- **jsonwebtoken** – JWT token generation & verification
-- **cookie-parser** – Parsing cookies for auth
-
-### Dev Tools & Utilities
-
-- **ts-node-dev** – TypeScript live-reloading for development
-- **CORS** – Cross-Origin Resource Sharing
-- **Zod** – Request data validation
-- **dotenv** – Environment variable management (recommended for config)
+- **TypeScript** – Typed superset of JavaScript
+- **Prisma ORM** – Type-safe database interaction
+- **PostgreSQL** – Database (can be replaced with other relational DBs)
+- **Zod** – Request validation
+- **HTTP-Status** – Status code management
+- **JWT** – For future authentication
+- **Cookie-Parser, CORS** – Middleware
 
 ---
 
-## 📦 Installation
+## ⚙️ Setup Guide
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/yourusername/bike-servicing-management-a8.git
+   cd bike-servicing-management-a8
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Setup environment variables**
+   Create a `.env` file with your database URL:
+
+   ```env
+   DATABASE_URL=your_postgresql_connection_string
+   ```
+
+4. **Run Prisma migrations**
+
+   ```bash
+   npx prisma migrate dev --name init
+   ```
+
+5. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## ✨ Key Features
+
+- **Customer Management**
+
+  - Create, update, delete, and fetch customer info
+
+- **Bike Management**
+
+  - Register bikes, view all bikes, or get specific bike info
+
+- **Service Record Handling**
+
+  - Add service records, fetch all or specific records
+  - Update service status (e.g., mark as complete)
+
+- **Overdue Services Checker**
+
+  - Get services with pending or in-progress status beyond 7 days
+
+- **Validation**
+
+  - Uses Zod for input validation
+
+- **Structured Response**
+  - All API responses follow a standard structure
+
+---
+
+## 📁 Folder Structure
 
 ```bash
-git clone https://github.com/your-username/bike-servicing-management.git
-cd bike-servicing-management
-npm install
+src
+├── modules
+│   ├── bike
+│   ├── customer
+│   └── service
+├── middleware
+├── shared
+├── utils
+└── server.ts
 ```
 
 ---
 
-## ▶️ Run Locally
+## 🔮 Future Improvements
 
-```bash
-npm run dev
-```
-
-> Make sure your PostgreSQL or preferred database is up and configured in `.env` before running.
-
----
-
-## 🔌 API Endpoints Overview
-
-### 🔧 Bikes
-
-| Method | Endpoint      | Description           |
-| ------ | ------------- | --------------------- |
-| GET    | `/bikes`      | Get all bikes         |
-| GET    | `/bikes/:idx` | Get single bike by ID |
-| POST   | `/bikes`      | Create a new bike     |
-
-### 👤 Customers
-
-| Method | Endpoint          | Description             |
-| ------ | ----------------- | ----------------------- |
-| GET    | `/customers`      | Get all customers       |
-| GET    | `/customers/:idx` | Get customer by ID      |
-| POST   | `/customers`      | Create a new customer   |
-| PUT    | `/customers/:idx` | Update customer details |
-| DELETE | `/customers/:idx` | Delete a customer       |
-
-### 🛠️ Services
-
-| Method | Endpoint                  | Description                     |
-| ------ | ------------------------- | ------------------------------- |
-| GET    | `/services`               | Get all service records         |
-| GET    | `/services/:idx`          | Get single service record       |
-| GET    | `/services/status`        | Get overdue or pending services |
-| POST   | `/services`               | Create a service record         |
-| PUT    | `/services/:idx/complete` | Mark a service as completed     |
+- Add user authentication with roles (admin/user)
+- Paginate and search endpoints
+- Unit and integration testing
+- Add Swagger/OpenAPI documentation
+- Frontend integration (optional React app)
 
 ---
 
-## 🥪 Validation
+## 📜 License
 
-- All `POST` and `PUT` requests are validated using **Zod** schema before reaching controllers.
-- Ensures data integrity and prevents malformed data from reaching the database.
-
----
-
-## 🛡️ Authentication (Coming Soon)
-
-Basic JWT authentication setup is scaffolded and planned for:
-
-- Login/Register
-- Role-based access control (Admin, User)
+This project is open-source and available under the [MIT License](LICENSE).
 
 ---
 
-## 📌 Environment Variables (Sample)
-
-Create a `.env` file in the root with the following:
-
-```env
-DATABASE_URL=your_prisma_database_url
-PORT=5000
-JWT_SECRET=your_jwt_secret
-```
-
----
-
-## 📁 Scripts
-
-```bash
-npm run dev      # Start server with ts-node-dev
-```
-
----
-
-## 📚 Future Improvements
-
-- Add unit & integration testing with Jest or Vitest
-- Role-based authentication
-- Pagination & filtering for listings
-- Monthly service reporting dashboard
-
----
-
-## 👨‍💻 Author
-
-**MD Rashid Sarkar**  
-📢 [rashidsarkar558@gmail.com](mailto:rashidsarkar558@gmail.com)  
-🌐 [Portfolio](https://fabulous-meringue-442652.netlify.app)  
-🐈 [GitHub](https://github.com/rashidsarkar)
-
----
-
-## 📍 License
-
-This project is licensed under the **ISC License**.
+Crafted with ❤️ by [MD Rashid Sarkar](https://github.com/rashidsarkar)
