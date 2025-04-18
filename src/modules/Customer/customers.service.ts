@@ -33,6 +33,13 @@ const updateCustomer = async (customId: string, payload: Partial<Customer>) => {
   const res = await prisma.customer.update({
     where: { customerId: customId },
     data: payload,
+    select: {
+      customerId: true,
+      name: true,
+      email: true,
+      phone: true,
+      createdAt: true,
+    },
   });
   return res;
 };
