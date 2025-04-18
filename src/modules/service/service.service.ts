@@ -69,6 +69,14 @@ const serviceStatusData = async () => {
       status: { in: ["pending", "in_progress"] },
       serviceDate: { lt: sevenDaysAgo },
     },
+    select: {
+      serviceId: true,
+      bikeId: true,
+      serviceDate: true,
+      completionDate: true,
+      description: true,
+      status: true,
+    },
   });
   return res;
 };
