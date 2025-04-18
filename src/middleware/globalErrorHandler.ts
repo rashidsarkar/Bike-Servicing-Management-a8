@@ -13,7 +13,7 @@ const globalErrorHandler = (
   let statusCode: number = status.INTERNAL_SERVER_ERROR;
   let message = "Internal Server Error";
   let errorDetails: any = null;
-  const stack = process.env.NODE_ENV === "development" ? err.stack : undefined;
+  const stack = err.stack;
 
   // ✅ Prisma Error
   if (err instanceof Prisma.PrismaClientKnownRequestError) {
